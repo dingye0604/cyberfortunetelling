@@ -17,7 +17,6 @@
     dom.reading = document.getElementById('reading');
     dom.wuxing = document.getElementById('wuxing');
     dom.nayin = document.getElementById('nayin');
-    dom.zodiac = document.getElementById('zodiac');
     dom.gua = document.getElementById('gua');
     dom.guaBlock = document.getElementById('guaBlock');
 
@@ -245,7 +244,6 @@
     renderReading(bazi, wuxing);
     renderWuxing(wuxing);
     renderNayin(bazi);
-    renderZodiac(bazi);
     renderGua(gua);
   }
 
@@ -424,11 +422,6 @@
     }
     html += '</div>';
     dom.nayin.innerHTML = html;
-  }
-
-  // -------- 生肖 --------
-  function renderZodiac(bazi) {
-    dom.zodiac.innerHTML = '<div class="zodiac-display">属' + bazi.year.zhi.zodiac + '</div>';
   }
 
   // -------- 卦象 --------

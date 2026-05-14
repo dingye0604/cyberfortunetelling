@@ -139,6 +139,7 @@ header::after {
 }
 
 .form-row {
+  position: relative;
   margin-bottom: 1.3rem;
 }
 
@@ -258,10 +259,13 @@ header::after {
 /* 隐藏原生 select */
 .native-select {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   pointer-events: none;
-  width: 1px;
-  height: 1px;
+  z-index: -1;
 }
 
 .form-note {
