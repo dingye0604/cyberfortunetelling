@@ -1,38 +1,35 @@
 :root {
-  --paper: #f0e8dc;
-  --paper-deep: #e5dac8;
+  --paper: #f5f0e8;
+  --paper-warm: #ede4d8;
   --ink: #1a1714;
   --ink-soft: #4a4540;
   --ink-light: #8a8278;
   --vermilion: #c23a2b;
   --gold: #b8943e;
   --border: #e5ded4;
-  --border-soft: rgba(255,255,255,0.35);
-  --glass-bg: rgba(255,255,255,0.35);
-  --glass-bg-hover: rgba(255,255,255,0.5);
-  --glass-bg-focus: rgba(255,255,255,0.65);
-  --glass-border: rgba(255,255,255,0.45);
-  --glass-border-focus: rgba(255,255,255,0.7);
-  --shadow-sm: 0 2px 8px rgba(26,23,20,0.06);
-  --shadow: 0 8px 32px rgba(26,23,20,0.1);
+  --shadow-sm: 0 2px 8px rgba(26,23,20,0.04);
+  --shadow: 0 8px 32px rgba(26,23,20,0.06);
+  --glass-bg: rgba(255,255,255,0.45);
+  --glass-bg-hover: rgba(255,255,255,0.6);
+  --glass-bg-focus: rgba(255,255,255,0.75);
+  --glass-border: rgba(255,255,255,0.5);
+  --glass-border-focus: rgba(255,255,255,0.75);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", "STSong", serif;
   color: var(--ink);
   line-height: 1.75;
   min-height: 100vh;
-  /* 分层暖色渐变背景 —— 毛玻璃效果的必要条件 */
+  /* 极浅暖色背景 —— 毛玻璃需要背景层次 */
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(194,58,43,0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(184,148,62,0.05) 0%, transparent 50%),
-    linear-gradient(165deg, #e8ddd0 0%, #ddd0c0 35%, #d4c6b4 70%, #c9b9a6 100%);
+    radial-gradient(ellipse at 20% 0%, rgba(194,58,43,0.015) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(184,148,62,0.02) 0%, transparent 50%),
+    linear-gradient(165deg, #f3ece2 0%, #ede4d8 40%, #e8ddd0 100%);
   background-attachment: fixed;
 }
 
@@ -44,16 +41,15 @@ body {
   display: flex;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0.8rem 1rem;
-  margin-bottom: 0.5rem;
-  backdrop-filter: blur(16px) saturate(1.1);
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
-  background: rgba(240,232,220,0.6);
-  border-bottom: 1px solid rgba(255,255,255,0.25);
+  padding: 0.7rem 1rem;
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+  background: rgba(243,236,226,0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.4);
 }
 
 .top-nav a {
-  padding: 0.4rem 1.2rem;
+  padding: 0.35rem 1.1rem;
   font-size: 0.85rem;
   color: var(--ink-light);
   text-decoration: none;
@@ -65,26 +61,26 @@ body {
 
 .top-nav a:hover {
   color: var(--vermilion);
-  background: rgba(194,58,43,0.06);
+  background: rgba(194,58,43,0.05);
 }
 
 .top-nav a.active {
   color: var(--vermilion);
-  background: rgba(194,58,43,0.08);
+  background: rgba(194,58,43,0.07);
   font-weight: 500;
 }
 
 .top-nav a.active::after {
   content: '';
   position: absolute;
-  bottom: 2px;
+  bottom: 3px;
   left: 50%;
   transform: translateX(-50%);
   width: 1.2rem;
   height: 2px;
   background: var(--vermilion);
   border-radius: 1px;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 /* ===== Layout ===== */
@@ -120,7 +116,7 @@ header::after {
   display: block;
   width: 2rem;
   height: 1px;
-  background: rgba(138,130,120,0.3);
+  background: rgba(138,130,120,0.2);
   margin: 1rem auto 0;
 }
 
@@ -128,10 +124,9 @@ header::after {
 .form-section {
   padding: 2rem 2rem 1.8rem;
   margin-bottom: 2.5rem;
-  /* 真正的毛玻璃 */
   background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(1.15);
-  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -156,48 +151,117 @@ header::after {
   letter-spacing: 0.04em;
 }
 
-/* Select —— 毛玻璃下拉 */
-.form-row select {
+/* ===== Custom Select ===== */
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-trigger {
   width: 100%;
   padding: 0.75rem 2.4rem 0.75rem 1rem;
   font-size: 0.95rem;
   font-family: inherit;
   color: var(--ink);
   cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  /* 毛玻璃核心 */
+  user-select: none;
   background: var(--glass-bg);
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%238a8278' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.9rem center;
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.02);
+  position: relative;
 }
 
-.form-row select:hover {
-  background-color: var(--glass-bg-hover);
+.custom-select-trigger::after {
+  content: '';
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 8px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23a0988a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-select.open .custom-select-trigger::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.custom-select-trigger:hover {
+  background: var(--glass-bg-hover);
   border-color: var(--glass-border-focus);
   transform: translateY(-1px);
-  box-shadow: inset 0 1px 2px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.04);
 }
 
-.form-row select:focus {
-  outline: none;
-  background-color: var(--glass-bg-focus);
-  border-color: rgba(194,58,43,0.25);
-  box-shadow: inset 0 1px 2px rgba(255,255,255,0.5), 0 0 0 4px rgba(194,58,43,0.06), 0 4px 16px rgba(0,0,0,0.06);
+.custom-select.open .custom-select-trigger {
+  background: var(--glass-bg-focus);
+  border-color: rgba(194,58,43,0.2);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.5), 0 0 0 3px rgba(194,58,43,0.05), 0 4px 16px rgba(0,0,0,0.05);
+  border-radius: 12px 12px 0 0;
 }
 
-/* select 选项样式 */
-.form-row select option {
-  background: #f5f0e8;
-  color: var(--ink);
-  padding: 0.5rem;
+.custom-select-options {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid var(--glass-border);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 12px 40px rgba(26,23,20,0.1);
+  padding: 0.3rem 0;
+}
+
+.custom-select.open .custom-select-options {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.custom-select-option {
+  padding: 0.55rem 1rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 6px;
+  margin: 0 0.3rem;
+}
+
+.custom-select-option:hover {
+  background: rgba(194,58,43,0.06);
+  color: var(--vermilion);
+}
+
+.custom-select-option.selected {
+  color: var(--vermilion);
+  font-weight: 500;
+  background: rgba(194,58,43,0.04);
+}
+
+/* 隐藏原生 select */
+.native-select {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
 }
 
 .form-note {
@@ -221,7 +285,7 @@ header::after {
   cursor: pointer;
   letter-spacing: 0.1em;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(194,58,43,0.2);
+  box-shadow: 0 2px 8px rgba(194,58,43,0.15);
   position: relative;
   overflow: hidden;
 }
@@ -231,14 +295,14 @@ header::after {
   position: absolute;
   top: 0; left: -100%;
   width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
   transition: left 0.5s;
 }
 
 #submitBtn:hover {
   background: #a83225;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(194,58,43,0.25);
+  box-shadow: 0 6px 20px rgba(194,58,43,0.2);
 }
 
 #submitBtn:hover::before {
@@ -247,7 +311,7 @@ header::after {
 
 #submitBtn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(194,58,43,0.2);
+  box-shadow: 0 2px 8px rgba(194,58,43,0.15);
 }
 
 /* ===== Results ===== */
@@ -263,10 +327,10 @@ header::after {
 .hidden { display: none !important; }
 
 .result-block {
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(16px) saturate(1.1);
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
-  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
+  border: 1px solid rgba(255,255,255,0.45);
   border-radius: 14px;
   padding: 1.8rem 2rem;
   margin-bottom: 1.2rem;
@@ -293,7 +357,7 @@ header::after {
   color: var(--ink-light);
   margin-bottom: 1.2rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.35);
   letter-spacing: 0.08em;
 }
 
@@ -357,7 +421,7 @@ header::after {
 .wuxing-row .bar-bg {
   flex: 1;
   height: 1.2rem;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.45);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -448,7 +512,7 @@ header::after {
 .gua-reading {
   margin-top: 1rem;
   padding: 1.2rem 1rem;
-  background: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: 10px;
@@ -578,4 +642,5 @@ header::after {
   .nayin-list { grid-template-columns: 1fr; }
   .gua-main-symbol { font-size: 2.8rem; }
   header h1 { font-size: 1.6rem; }
+  .custom-select-options { max-height: 220px; }
 }

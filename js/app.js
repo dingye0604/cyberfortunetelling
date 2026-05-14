@@ -4,6 +4,7 @@
   'use strict';
 
   var dom = {};
+  var openDropdown = null;
 
   function init() {
     dom.form = document.getElementById('baziForm');
@@ -25,11 +26,110 @@
     populateHours();
     setDefaultDate();
 
-    dom.yearSel.addEventListener('change', refreshDays);
-    dom.monthSel.addEventListener('change', refreshDays);
+    // 为所有 select 创建自定义下拉
+    wrapSelect(dom.yearSel);
+    wrapSelect(dom.monthSel);
+    wrapSelect(dom.daySel);
+    wrapSelect(dom.hourSel);
+
+    dom.yearSel.addEventListener('change', onYearMonthChange);
+    dom.monthSel.addEventListener('change', onYearMonthChange);
     dom.form.addEventListener('submit', onSubmit);
+
+    // 点击外部关闭下拉
+    document.addEventListener('click', function(e) {
+      if (openDropdown && !openDropdown.contains(e.target)) {
+        closeDropdown(openDropdown);
+      }
+    });
   }
 
+  // ===== 自定义下拉组件 =====
+  function wrapSelect(selectEl) {
+    var parent = selectEl.parentNode;
+    var wrapper = document.createElement('div');
+    wrapper.className = 'custom-select';
+    wrapper.dataset.target = selectEl.id;
+
+    var trigger = document.createElement('div');
+    trigger.className = 'custom-select-trigger';
+    trigger.textContent = getSelectLabel(selectEl);
+
+    var options = document.createElement('div');
+    options.className = 'custom-select-options';
+    buildOptions(selectEl, options);
+
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(options);
+    parent.insertBefore(wrapper, selectEl);
+
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleDropdown(wrapper);
+    });
+
+    // 原生 select 变化时同步自定义 UI
+    selectEl.addEventListener('change', function() {
+      trigger.textContent = getSelectLabel(selectEl);
+      markSelected(options, selectEl.value);
+    });
+  }
+
+  function buildOptions(selectEl, container) {
+    container.innerHTML = '';
+    for (var i = 0; i < selectEl.options.length; i++) {
+      var opt = selectEl.options[i];
+      var div = document.createElement('div');
+      div.className = 'custom-select-option';
+      div.dataset.value = opt.value;
+      div.textContent = opt.textContent;
+      if (opt.value === selectEl.value) div.classList.add('selected');
+      div.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var wrapper = this.closest('.custom-select');
+        var targetId = wrapper.dataset.target;
+        var target = document.getElementById(targetId);
+        target.value = this.dataset.value;
+        target.dispatchEvent(new Event('change'));
+        closeDropdown(wrapper);
+      });
+      container.appendChild(div);
+    }
+  }
+
+  function getSelectLabel(selectEl) {
+    var opt = selectEl.options[selectEl.selectedIndex];
+    return opt ? opt.textContent : '';
+  }
+
+  function markSelected(container, value) {
+    var items = container.querySelectorAll('.custom-select-option');
+    for (var i = 0; i < items.length; i++) {
+      items[i].classList.toggle('selected', items[i].dataset.value === value);
+    }
+  }
+
+  function toggleDropdown(wrapper) {
+    if (wrapper.classList.contains('open')) {
+      closeDropdown(wrapper);
+    } else {
+      if (openDropdown) closeDropdown(openDropdown);
+      wrapper.classList.add('open');
+      openDropdown = wrapper;
+      // 滚动到选中项
+      var selected = wrapper.querySelector('.custom-select-option.selected');
+      if (selected) {
+        selected.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+      }
+    }
+  }
+
+  function closeDropdown(wrapper) {
+    wrapper.classList.remove('open');
+    if (openDropdown === wrapper) openDropdown = null;
+  }
+
+  // ===== 数据填充 =====
   function populateYears() {
     for (var y = 1900; y <= 2100; y++) {
       var opt = document.createElement('option');
@@ -43,11 +143,16 @@
     refreshDays();
   }
 
+  function onYearMonthChange() {
+    refreshDays();
+  }
+
   function refreshDays() {
     var y = parseInt(dom.yearSel.value);
     var m = parseInt(dom.monthSel.value);
     var maxDay = daysInMonth(y, m);
-    var currentVal = dom.daySel.value;
+    var currentVal = parseInt(dom.daySel.value) || 1;
+    if (currentVal > maxDay) currentVal = maxDay;
 
     dom.daySel.innerHTML = '';
     for (var d = 1; d <= maxDay; d++) {
@@ -56,9 +161,20 @@
       opt.textContent = d + ' 日';
       dom.daySel.appendChild(opt);
     }
-    if (currentVal && parseInt(currentVal) <= maxDay) {
-      dom.daySel.value = currentVal;
-    }
+    dom.daySel.value = currentVal;
+    dom.daySel.dispatchEvent(new Event('change'));
+
+    // 重建自定义下拉
+    rebuildCustomSelect(dom.daySel);
+  }
+
+  function rebuildCustomSelect(selectEl) {
+    var wrapper = selectEl.previousElementSibling;
+    if (!wrapper || !wrapper.classList.contains('custom-select')) return;
+    var trigger = wrapper.querySelector('.custom-select-trigger');
+    var options = wrapper.querySelector('.custom-select-options');
+    buildOptions(selectEl, options);
+    trigger.textContent = getSelectLabel(selectEl);
   }
 
   function daysInMonth(y, m) {
@@ -86,8 +202,20 @@
     dom.monthSel.value = now.getMonth() + 1;
     refreshDays();
     dom.daySel.value = Math.min(now.getDate(), daysInMonth(now.getFullYear(), now.getMonth() + 1));
+    // 同步自定义 UI
+    syncAllCustomSelects();
   }
 
+  function syncAllCustomSelects() {
+    [dom.yearSel, dom.monthSel, dom.daySel, dom.hourSel].forEach(function(sel) {
+      var wrapper = sel.previousElementSibling;
+      if (!wrapper || !wrapper.classList.contains('custom-select')) return;
+      wrapper.querySelector('.custom-select-trigger').textContent = getSelectLabel(sel);
+      markSelected(wrapper.querySelector('.custom-select-options'), sel.value);
+    });
+  }
+
+  // ===== 表单提交 =====
   function onSubmit(e) {
     e.preventDefault();
 
@@ -146,7 +274,6 @@
     var dayMaster = bazi.day.gan;
     var dmElement = dayMaster.wuxing;
 
-    // 计算支持/消耗力量
     var supporting = 0, draining = 0, same = 0;
     var pillars = [bazi.year, bazi.month, bazi.day, bazi.hour];
     for (var i = 0; i < pillars.length; i++) {
@@ -163,22 +290,16 @@
     var strength = supporting >= draining ? '偏旺' : '偏弱';
     var html = '<div class="reading-content">';
 
-    // 日主分析
     html += '<p class="reading-lead">日主为 <strong class="' + wuxingClass(dmElement) + '">' + dayMaster.name + dmElement + '</strong>，命格' + strength + '。</p>';
-
-    // 性格简述
     html += '<p>' + getPersonality(dmElement, strength) + '</p>';
 
-    // 五行分析
     html += '<p>八字中';
     if (wx.maxWx.length > 0) html += '<strong>' + wx.maxWx.join('、') + '</strong>最旺';
     if (wx.minWx[0] !== wx.maxWx[0]) html += '，<strong>' + wx.minWx.join('、') + '</strong>最弱';
     html += '。</p>';
 
-    // 建议
     html += '<p>' + getAdvice(dmElement, strength, wx) + '</p>';
 
-    // 纳音总论
     var nayinItems = [bazi.year, bazi.month, bazi.day];
     if (bazi.hour) nayinItems.push(bazi.hour);
     html += '<div class="reading-nayin">';
@@ -190,19 +311,16 @@
       html += '</div>';
     }
     html += '</div>';
-
     html += '</div>';
     dom.reading.innerHTML = html;
   }
 
-  // 五行生克关系
   function elementRelation(from, to) {
     if (from === to) return '同';
     var sheng = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
     var ke = { '木': '土', '土': '水', '水': '火', '火': '金', '金': '木' };
     if (sheng[from] === to) return '生';
     if (ke[from] === to) return '克';
-    // 泄：to生from，即from泄to
     if (sheng[to] === from) return '泄';
     return '同';
   }
@@ -243,7 +361,6 @@
     };
     var base = advices[element] || '';
 
-    // 根据五行缺失补充建议
     var missing = [];
     for (var k in wx.counts) {
       if (wx.counts[k] === 0) missing.push(k);
@@ -323,7 +440,6 @@
     dom.guaBlock.classList.remove('hidden');
 
     var html = '';
-
     html += '<div class="gua-header">';
     html += '<div class="gua-main-symbol">' + gua.upperTrigram.symbol + gua.lowerTrigram.symbol + '</div>';
     html += '<div class="gua-main-name">' + gua.originalGua.name + '</div>';
@@ -344,7 +460,6 @@
     }
 
     html += '<div class="gua-meta">动爻 <span>' + yaoText(gua.movingYao) + '</span></div>';
-
     dom.gua.innerHTML = html;
   }
 
