@@ -11,7 +11,6 @@
     dom.monthSel = document.getElementById('month');
     dom.daySel = document.getElementById('day');
     dom.hourSel = document.getElementById('hour');
-    dom.submitBtn = document.getElementById('submitBtn');
     dom.results = document.getElementById('results');
     dom.pillars = document.getElementById('pillars');
     dom.wuxing = document.getElementById('wuxing');
@@ -30,17 +29,15 @@
     dom.form.addEventListener('submit', onSubmit);
   }
 
-  // 填充年份（1900-2100）
   function populateYears() {
     for (var y = 1900; y <= 2100; y++) {
       var opt = document.createElement('option');
       opt.value = y;
-      opt.textContent = y + '年';
+      opt.textContent = y + ' 年';
       dom.yearSel.appendChild(opt);
     }
   }
 
-  // 填充日（根据年月动态）
   function populateDays() {
     refreshDays();
   }
@@ -55,10 +52,9 @@
     for (var d = 1; d <= maxDay; d++) {
       var opt = document.createElement('option');
       opt.value = d;
-      opt.textContent = d + '日';
+      opt.textContent = d + ' 日';
       dom.daySel.appendChild(opt);
     }
-    // 保留之前选择（如果还在有效范围）
     if (currentVal && parseInt(currentVal) <= maxDay) {
       dom.daySel.value = currentVal;
     }
@@ -68,7 +64,6 @@
     return new Date(y, m, 0).getDate();
   }
 
-  // 填充时辰
   function populateHours() {
     var opt = document.createElement('option');
     opt.value = '-1';
@@ -79,12 +74,11 @@
       var sc = SHI_CHEN[i];
       opt = document.createElement('option');
       opt.value = i;
-      opt.textContent = sc.name + ' (' + sc.period + ')';
+      opt.textContent = sc.name + '（' + sc.period + '）';
       dom.hourSel.appendChild(opt);
     }
   }
 
-  // 默认设为用户出生年份（粗略设为 2000 年左右以便测试）
   function setDefaultDate() {
     var now = new Date();
     dom.yearSel.value = Math.min(now.getFullYear(), 2100);
@@ -93,7 +87,6 @@
     dom.daySel.value = Math.min(now.getDate(), daysInMonth(now.getFullYear(), now.getMonth() + 1));
   }
 
-  // ========== 表单提交 ==========
   function onSubmit(e) {
     e.preventDefault();
 
@@ -105,34 +98,20 @@
     if (isNaN(year) || isNaN(month) || isNaN(day)) return;
 
     var bazi = calcBaZi(year, month, day, hour);
-
     var pillars = [bazi.year, bazi.month, bazi.day, bazi.hour];
     var wuxing = analyzeWuxing(pillars);
-
     var gua = calcGua(year, month, day, hour);
 
-    renderResults(bazi, wuxing, gua);
+    renderAll(bazi, wuxing, gua);
     dom.results.classList.remove('hidden');
     dom.results.scrollIntoView({ behavior: 'smooth' });
   }
 
-  // ========== 渲染 ==========
+  function wuxingClass(wx) { return WUXING_COLORS[wx] ? WUXING_COLORS[wx].css : ''; }
+  function barClass(wx) { return WUXING_COLORS[wx] ? WUXING_COLORS[wx].bar : ''; }
+  function yaoText(n) { return ['', '初爻', '二爻', '三爻', '四爻', '五爻', '上爻'][n] || n + '爻'; }
 
-  function yaoText(n) {
-    var map = ['', '初爻', '二爻', '三爻', '四爻', '五爻', '上爻'];
-    return map[n] || n + '爻';
-  }
-
-  function wuxingClass(wx) {
-    return WUXING_COLORS[wx] ? WUXING_COLORS[wx].css : '';
-  }
-
-  function barClass(wx) {
-    return WUXING_COLORS[wx] ? WUXING_COLORS[wx].bar : '';
-  }
-
-  // 八字渲染
-  function renderResults(bazi, wuxing, gua) {
+  function renderAll(bazi, wuxing, gua) {
     renderPillars(bazi);
     renderWuxing(wuxing);
     renderNayin(bazi);
@@ -140,11 +119,11 @@
     renderGua(gua);
   }
 
+  // -------- 八字 --------
   function renderPillars(bazi) {
-    var html = '';
     var labels = ['年柱', '月柱', '日柱', '时柱'];
     var items = [bazi.year, bazi.month, bazi.day, bazi.hour];
-
+    var html = '';
     for (var i = 0; i < items.length; i++) {
       var item = items[i];
       html += '<div class="pillar-card">';
@@ -153,66 +132,64 @@
         html += '<div class="pillar-gan ' + wuxingClass(item.gan.wuxing) + '">' + item.gan.name + '</div>';
         html += '<div class="pillar-zhi ' + wuxingClass(item.zhi.wuxing) + '">' + item.zhi.name + '</div>';
       } else {
-        html += '<div class="pillar-hour-unknown">未知</div>';
+        html += '<div class="pillar-hour-unknown">—</div>';
       }
       html += '</div>';
     }
     dom.pillars.innerHTML = html;
   }
 
-  // 五行渲染
+  // -------- 五行 --------
   function renderWuxing(wx) {
     var order = ['木', '火', '土', '金', '水'];
-    var maxVal = 0;
-    for (var k in wx.counts) {
-      if (wx.counts[k] > maxVal) maxVal = wx.counts[k];
-    }
-    if (maxVal === 0) maxVal = 1;
+    var maxVal = 1;
+    for (var k in wx.counts) { if (wx.counts[k] > maxVal) maxVal = wx.counts[k]; }
 
     var html = '<div class="wuxing-chart">';
     for (var i = 0; i < order.length; i++) {
-      var wxName = order[i];
-      var count = wx.counts[wxName];
-      var pct = Math.round(count / maxVal * 100);
+      var name = order[i];
+      var cnt = wx.counts[name];
+      var pct = Math.round(cnt / maxVal * 100);
       html += '<div class="wuxing-row">';
-      html += '<div class="label ' + wuxingClass(wxName) + '">' + wxName + '</div>';
-      html += '<div class="bar-bg"><div class="bar-fill ' + barClass(wxName) + '" style="width:' + pct + '%"></div></div>';
-      html += '<div class="count">' + count + '/' + wx.totalN + '</div>';
+      html += '<div class="label ' + wuxingClass(name) + '">' + name + '</div>';
+      html += '<div class="bar-bg"><div class="bar-fill ' + barClass(name) + '" style="width:' + pct + '%"></div></div>';
+      html += '<div class="count">' + cnt + '</div>';
       html += '</div>';
     }
     html += '</div>';
 
     if (wx.dayMaster) {
-      html += '<div class="wuxing-summary" style="margin-top:0.8rem;">';
-      html += '日主为 <strong class="' + wuxingClass(wx.dayMaster.wuxing) + '">' + wx.dayMaster.name + wx.dayMaster.wuxing + '</strong>（日柱天干）';
-      html += '<br>五行以 <strong>' + wx.maxWx.join('/') + '</strong> 为最旺';
-      if (wx.minWx.length > 0) {
-        html += '，<strong>' + wx.minWx.join('/') + '</strong> 最弱';
-      }
+      html += '<div class="wuxing-summary">';
+      html += '日主 <strong class="' + wuxingClass(wx.dayMaster.wuxing) + '">' + wx.dayMaster.name + wx.dayMaster.wuxing + '</strong>';
+      html += '，五行偏旺 <strong>' + wx.maxWx.join('、') + '</strong>';
+      if (wx.minWx[0] !== wx.maxWx[0]) html += '，偏弱 <strong>' + wx.minWx.join('、') + '</strong>';
       html += '</div>';
     }
-
     dom.wuxing.innerHTML = html;
   }
 
-  // 纳音渲染
+  // -------- 纳音 --------
   function renderNayin(bazi) {
-    var html = '';
-    html += '<div class="nayin-item"><span class="pillar-tag">年柱</span><span class="value">' + bazi.year.nayin + '</span></div>';
-    html += '<div class="nayin-item"><span class="pillar-tag">月柱</span><span class="value">' + bazi.month.nayin + '</span></div>';
-    html += '<div class="nayin-item"><span class="pillar-tag">日柱</span><span class="value">' + bazi.day.nayin + '</span></div>';
-    if (bazi.hour) {
-      html += '<div class="nayin-item"><span class="pillar-tag">时柱</span><span class="value">' + bazi.hour.nayin + '</span></div>';
+    var items = [
+      ['年柱', bazi.year.nayin],
+      ['月柱', bazi.month.nayin],
+      ['日柱', bazi.day.nayin],
+      ['时柱', bazi.hour ? bazi.hour.nayin : '—'],
+    ];
+    var html = '<div class="nayin-list">';
+    for (var i = 0; i < items.length; i++) {
+      html += '<div class="nayin-item"><span class="pillar-tag">' + items[i][0] + '</span><span class="value">' + items[i][1] + '</span></div>';
     }
+    html += '</div>';
     dom.nayin.innerHTML = html;
   }
 
-  // 生肖渲染
+  // -------- 生肖 --------
   function renderZodiac(bazi) {
     dom.zodiac.innerHTML = '<div class="zodiac-display">属' + bazi.year.zhi.zodiac + '</div>';
   }
 
-  // 卦象渲染
+  // -------- 卦象 --------
   function renderGua(gua) {
     if (!gua) {
       dom.guaBlock.classList.add('hidden');
@@ -220,24 +197,34 @@
     }
     dom.guaBlock.classList.remove('hidden');
 
-    var html = '<div class="gua-cards">';
-    html += '<div class="gua-card">';
-    html += '<div class="gua-name">' + gua.originalGua.name + '</div>';
-    html += '<div class="gua-trigrams">' + gua.upperTrigram.symbol + gua.lowerTrigram.symbol + '</div>';
-    html += '<div class="gua-meaning">' + gua.originalGua.meaning + '</div>';
+    var html = '';
+
+    // 本卦：大幅符号 + 名称 + 解读
+    html += '<div class="gua-header">';
+    html += '<div class="gua-main-symbol">' + gua.upperTrigram.symbol + gua.lowerTrigram.symbol + '</div>';
+    html += '<div class="gua-main-name">' + gua.originalGua.name + '</div>';
     html += '</div>';
-    html += '<div class="gua-card">';
-    html += '<div class="gua-name">' + gua.changedGua.name + '</div>';
-    html += '<div class="gua-trigrams">' + gua.changedUpperTrigram.symbol + gua.changedLowerTrigram.symbol + '</div>';
-    html += '<div class="gua-meaning">' + gua.changedGua.meaning + '</div>';
-    html += '</div>';
-    html += '</div>';
-    html += '<div class="gua-yao">动爻：' + yaoText(gua.movingYao) + '</div>';
+
+    html += '<div class="gua-reading">' + gua.originalGua.reading + '</div>';
+
+    // 变卦：紧凑显示
+    if (gua.changedGua.name !== gua.originalGua.name) {
+      html += '<div class="gua-derived">';
+      html += '<div class="gua-derived-symbol">' + gua.changedUpperTrigram.symbol + gua.changedLowerTrigram.symbol + '</div>';
+      html += '<div class="gua-derived-name">' + gua.changedGua.name + '</div>';
+      html += '</div>';
+      html += '<div class="gua-derived-reading">' + gua.changedGua.reading + '</div>';
+    } else {
+      html += '<div class="gua-derived" style="border-top:0;padding-top:0.5rem;">';
+      html += '<div class="gua-derived-symbol" style="font-size:1rem;">本卦与变卦相同</div>';
+      html += '</div>';
+    }
+
+    html += '<div class="gua-meta">动爻 <span>' + yaoText(gua.movingYao) + '</span></div>';
 
     dom.gua.innerHTML = html;
   }
 
-  // DOM Ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

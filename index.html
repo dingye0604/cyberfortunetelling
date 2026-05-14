@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>周易命理查询</title>
+<title>周易命理</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>周易命理查询</h1>
-    <p class="subtitle">生辰八字 · 五行纳音 · 梅花易数</p>
+    <h1>周易命理</h1>
+    <p class="subtitle">八字 · 五行 · 纳音 · 梅花易数</p>
   </header>
 
   <section class="form-section">
@@ -41,9 +44,9 @@
         <select id="day"></select>
       </div>
       <div class="form-row">
-        <label for="hour">出生时辰</label>
+        <label for="hour">时辰</label>
         <select id="hour"></select>
-        <p class="form-note">子时跨越两日（23:00-00:59），本工具以输入日期为准</p>
+        <p class="form-note">子时跨日（23:00—00:59），本工具以所选日期为准</p>
       </div>
       <button type="submit" id="submitBtn">开始排盘</button>
     </form>
@@ -56,7 +59,7 @@
     </div>
 
     <div class="result-block">
-      <h2>五行分析</h2>
+      <h2>五行</h2>
       <div id="wuxing"></div>
     </div>
 
@@ -71,11 +74,11 @@
     </div>
 
     <div class="result-block" id="guaBlock">
-      <h2>梅花易数</h2>
+      <h2>卦象</h2>
       <div id="gua"></div>
     </div>
 
-    <p class="footer-note">节气日期的近似可能带来 ±1 天的偏差，若出生时间恰逢节气前后，排盘可能略有出入。</p>
+    <p class="footer-note">节气日期存在 ±1 天的近似偏差。<br>命理推算仅供玩味，人生终究在自己手中。</p>
   </section>
 </div>
 
