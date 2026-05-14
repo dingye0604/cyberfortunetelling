@@ -10,15 +10,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<nav class="top-nav">
+  <a href="index.html" class="active">首页</a>
+  <a href="knowledge.html">命理知识</a>
+</nav>
+
 <div class="container">
   <header>
     <h1>周易命理</h1>
     <p class="subtitle">八字 · 五行 · 纳音 · 梅花易数</p>
   </header>
-
-  <nav class="site-nav">
-    <a href="knowledge.html">命理知识</a>
-  </nav>
 
   <section class="form-section">
     <form id="baziForm">
@@ -55,10 +57,6 @@
       <button type="submit" id="submitBtn">开始排盘</button>
     </form>
   </section>
-
-  <nav class="site-nav" id="siteNav" style="display:none">
-    <a href="knowledge.html">命理知识</a>
-  </nav>
 
   <section id="results" class="results-section hidden">
     <div class="result-block">
