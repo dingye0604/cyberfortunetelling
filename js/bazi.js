@@ -109,26 +109,38 @@ function calcBaZi(year, month, day, shiChenIndex) {
   if (shiChenIndex >= 0) {
     hourPillar = calcHourPillar(shiChenIndex, dayPillar.ganIndex);
   }
+  var yearNayin = LIU_SHI_JIA_ZI[yearPillar.ganzhiIndex];
+  var monthNayin = LIU_SHI_JIA_ZI[monthPillar.ganzhiIndex];
+  var dayNayin = LIU_SHI_JIA_ZI[dayPillar.ganzhiIndex];
+  var hourNayin = hourPillar ? LIU_SHI_JIA_ZI[hourPillar.ganzhiIndex] : null;
   return {
     year: {
       gan: TIAN_GAN[yearPillar.ganIndex],
       zhi: DI_ZHI[yearPillar.zhiIndex],
-      nayin: LIU_SHI_JIA_ZI[yearPillar.ganzhiIndex],
+      nayin: yearNayin.name,
+      nayinReading: yearNayin.reading,
+      ganzhiIndex: yearPillar.ganzhiIndex,
     },
     month: {
       gan: TIAN_GAN[monthPillar.ganIndex],
       zhi: DI_ZHI[monthPillar.zhiIndex],
-      nayin: LIU_SHI_JIA_ZI[monthPillar.ganzhiIndex],
+      nayin: monthNayin.name,
+      nayinReading: monthNayin.reading,
+      ganzhiIndex: monthPillar.ganzhiIndex,
     },
     day: {
       gan: TIAN_GAN[dayPillar.ganIndex],
       zhi: DI_ZHI[dayPillar.zhiIndex],
-      nayin: LIU_SHI_JIA_ZI[dayPillar.ganzhiIndex],
+      nayin: dayNayin.name,
+      nayinReading: dayNayin.reading,
+      ganzhiIndex: dayPillar.ganzhiIndex,
     },
     hour: hourPillar ? {
       gan: TIAN_GAN[hourPillar.ganIndex],
       zhi: DI_ZHI[hourPillar.zhiIndex],
-      nayin: LIU_SHI_JIA_ZI[hourPillar.ganzhiIndex],
+      nayin: hourNayin.name,
+      nayinReading: hourNayin.reading,
+      ganzhiIndex: hourPillar.ganzhiIndex,
     } : null,
   };
 }
