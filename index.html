@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>周易命理查询</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>周易命理查询</h1>
+    <p class="subtitle">生辰八字 · 五行纳音 · 梅花易数</p>
+  </header>
+
+  <section class="form-section">
+    <form id="baziForm">
+      <div class="form-row">
+        <label for="year">出生年</label>
+        <select id="year"></select>
+      </div>
+      <div class="form-row">
+        <label for="month">出生月</label>
+        <select id="month">
+          <option value="1">一月</option>
+          <option value="2">二月</option>
+          <option value="3">三月</option>
+          <option value="4">四月</option>
+          <option value="5">五月</option>
+          <option value="6">六月</option>
+          <option value="7">七月</option>
+          <option value="8">八月</option>
+          <option value="9">九月</option>
+          <option value="10">十月</option>
+          <option value="11">十一月</option>
+          <option value="12">十二月</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="day">出生日</label>
+        <select id="day"></select>
+      </div>
+      <div class="form-row">
+        <label for="hour">出生时辰</label>
+        <select id="hour"></select>
+        <p class="form-note">子时跨越两日（23:00-00:59），本工具以输入日期为准</p>
+      </div>
+      <button type="submit" id="submitBtn">开始排盘</button>
+    </form>
+  </section>
+
+  <section id="results" class="results-section hidden">
+    <div class="result-block">
+      <h2>八字</h2>
+      <div class="pillars" id="pillars"></div>
+    </div>
+
+    <div class="result-block">
+      <h2>五行分析</h2>
+      <div id="wuxing"></div>
+    </div>
+
+    <div class="result-block">
+      <h2>纳音</h2>
+      <div id="nayin"></div>
+    </div>
+
+    <div class="result-block">
+      <h2>生肖</h2>
+      <div id="zodiac"></div>
+    </div>
+
+    <div class="result-block" id="guaBlock">
+      <h2>梅花易数</h2>
+      <div id="gua"></div>
+    </div>
+
+    <p class="footer-note">节气日期的近似可能带来 ±1 天的偏差，若出生时间恰逢节气前后，排盘可能略有出入。</p>
+  </section>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/bazi.js"></script>
+<script src="js/wuxing.js"></script>
+<script src="js/gua.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

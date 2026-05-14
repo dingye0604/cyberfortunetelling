@@ -1,0 +1,319 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  background: #f5f0eb;
+  color: #2c2c2c;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3a2a1a;
+  letter-spacing: 0.1em;
+}
+
+.subtitle {
+  color: #8a7a6a;
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+  letter-spacing: 0.05em;
+}
+
+/* Form */
+.form-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+}
+
+.form-row {
+  margin-bottom: 1.2rem;
+}
+
+.form-row label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5a4a3a;
+  margin-bottom: 0.4rem;
+}
+
+.form-row select {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #2c2c2c;
+  appearance: auto;
+  cursor: pointer;
+}
+
+.form-row select:focus {
+  outline: none;
+  border-color: #8a7a6a;
+  background: #fff;
+}
+
+.form-note {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 0.3rem;
+}
+
+#submitBtn {
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #5a4a3a;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: background 0.2s;
+}
+
+#submitBtn:hover {
+  background: #3a2a1a;
+}
+
+/* Results */
+.results-section {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.result-block {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  margin-bottom: 1.2rem;
+}
+
+.result-block h2 {
+  font-size: 1rem;
+  color: #8a7a6a;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f0ebe5;
+  letter-spacing: 0.05em;
+}
+
+/* Four Pillars */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+}
+
+.pillar-card {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  background: #faf8f5;
+  border-radius: 8px;
+  border: 1px solid #f0ebe5;
+}
+
+.pillar-label {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+}
+
+.pillar-gan {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pillar-zhi {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pillar-hour-unknown {
+  font-size: 1.8rem;
+  color: #ccc;
+  font-weight: 700;
+}
+
+/* Five Elements color classes */
+.wuxing-mu { color: #4a9e4a; }
+.wuxing-huo { color: #d9554f; }
+.wuxing-tu { color: #c49a3c; }
+.wuxing-jin { color: #b8860b; }
+.wuxing-shui { color: #4a7fc7; }
+
+/* Wuxing bars */
+.wuxing-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.wuxing-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.wuxing-row .label {
+  width: 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.wuxing-row .bar-bg {
+  flex: 1;
+  height: 1.4rem;
+  background: #f0ebe5;
+  border-radius: 0.7rem;
+  overflow: hidden;
+}
+
+.wuxing-row .bar-fill {
+  height: 100%;
+  border-radius: 0.7rem;
+  transition: width 0.5s ease;
+}
+
+.wuxing-row .count {
+  width: 2.5rem;
+  font-size: 0.9rem;
+  color: #8a7a6a;
+  text-align: right;
+}
+
+.bar-mu { background: #4a9e4a; }
+.bar-huo { background: #d9554f; }
+.bar-tu { background: #c49a3c; }
+.bar-jin { background: #b8860b; }
+.bar-shui { background: #4a7fc7; }
+
+.wuxing-summary {
+  margin-top: 0.8rem;
+  font-size: 0.95rem;
+  color: #5a4a3a;
+}
+
+/* Nayin */
+.nayin-item {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+
+.nayin-item .pillar-tag {
+  font-size: 0.85rem;
+  color: #aaa;
+  min-width: 3rem;
+}
+
+.nayin-item .value {
+  font-size: 1.1rem;
+  color: #3a2a1a;
+}
+
+/* Zodiac */
+.zodiac-display {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3a2a1a;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+/* Gua */
+.gua-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.gua-card {
+  text-align: center;
+  padding: 1rem;
+  background: #faf8f5;
+  border-radius: 8px;
+  border: 1px solid #f0ebe5;
+}
+
+.gua-card .gua-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #3a2a1a;
+  margin-bottom: 0.3rem;
+}
+
+.gua-card .gua-trigrams {
+  font-size: 0.9rem;
+  color: #8a7a6a;
+  margin-bottom: 0.3rem;
+}
+
+.gua-card .gua-meaning {
+  font-size: 0.85rem;
+  color: #6a5a4a;
+}
+
+.gua-yao {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  color: #8a7a6a;
+  text-align: center;
+}
+
+/* Footer note */
+.footer-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #bbb;
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container { padding: 1rem; }
+  .form-section { padding: 1.2rem; }
+  .result-block { padding: 1.2rem; }
+  .pillars { grid-template-columns: repeat(2, 1fr); }
+  .gua-cards { grid-template-columns: 1fr; }
+  header h1 { font-size: 1.6rem; }
+  .pillar-gan, .pillar-zhi { font-size: 1.8rem; }
+}
