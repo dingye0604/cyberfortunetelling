@@ -3,11 +3,12 @@
 (function() {
   'use strict';
 
-  var pickDate, dateTitle, ganzhiEl, nayinBadge, jianchuBadge;
-  var yiList, jiList, nayinInfo;
+  var pickDate, dateTrigger, dateTitle;
+  var ganzhiEl, nayinBadge, jianchuBadge, yiList, jiList, nayinInfo;
 
   function init() {
     pickDate = document.getElementById('pickDate');
+    dateTrigger = document.getElementById('dateTrigger');
     dateTitle = document.getElementById('dateTitle');
     ganzhiEl = document.getElementById('ganzhi');
     nayinBadge = document.getElementById('nayinBadge');
@@ -20,15 +21,22 @@
     pickDate.value = fmtDate(today);
     pickDate.max = fmtDate(addDays(today, 30));
     pickDate.min = fmtDate(addDays(today, -30));
+    dateTrigger.textContent = triggerText(today);
     updateDateTitle(today);
 
     render(today);
 
     pickDate.addEventListener('change', function() {
       var d = new Date(pickDate.value + 'T12:00:00');
+      dateTrigger.textContent = triggerText(d);
       updateDateTitle(d);
       render(d);
     });
+  }
+
+  function triggerText(d) {
+    var week = ['日', '一', '二', '三', '四', '五', '六'];
+    return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日 星期' + week[d.getDay()];
   }
 
   function fmtDate(d) {
@@ -44,23 +52,16 @@
   }
 
   function updateDateTitle(d) {
-    var weekNames = ['日', '一', '二', '三', '四', '五', '六'];
-    dateTitle.textContent = d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日' + ' 星期' + weekNames[d.getDay()];
+    dateTitle.textContent = triggerText(d);
   }
 
   function render(d) {
     var daily = calcDaily(d);
 
-    // 干支
     ganzhiEl.textContent = daily.fullGanzhi;
-
-    // 纳音标
     nayinBadge.textContent = '日纳音：' + daily.nayin + '　生肖：属' + daily.zodiac;
-
-    // 建除
     jianchuBadge.textContent = daily.jianChu.name + '日';
 
-    // 宜
     yiList.innerHTML = '';
     for (var i = 0; i < daily.yi.length; i++) {
       var tag = document.createElement('span');
@@ -69,7 +70,6 @@
       yiList.appendChild(tag);
     }
 
-    // 忌
     jiList.innerHTML = '';
     for (var j = 0; j < daily.ji.length; j++) {
       var tag2 = document.createElement('span');
@@ -78,7 +78,6 @@
       jiList.appendChild(tag2);
     }
 
-    // 纳音解读
     nayinInfo.innerHTML = '<div style="text-align:center;">' +
       '<div style="font-size:1.1rem;color:var(--ink);margin-bottom:0.5rem;">' + daily.nayin + '</div>' +
       '<p style="font-size:0.9rem;color:var(--ink-soft);line-height:1.75;">' + daily.nayinReading + '</p>' +

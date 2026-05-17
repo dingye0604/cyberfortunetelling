@@ -37,8 +37,10 @@ body {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.7rem 1.5rem;
-  background: var(--paper);
-  border-bottom: 1px solid var(--border);
+  background: rgba(245,240,232,0.55);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 
 .top-nav a {
@@ -614,25 +616,42 @@ header::after {
 }
 
 /* ===== Daily ===== */
-#pickDate {
+.custom-date {
+  position: relative;
+}
+
+.custom-date-trigger {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 2.4rem 0.75rem 1rem;
   font-size: 0.95rem;
   font-family: inherit;
   color: var(--ink);
+  cursor: pointer;
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.02);
 }
 
-#pickDate:focus {
-  outline: none;
-  border-color: rgba(194,58,43,0.25);
-  box-shadow: 0 0 0 3px rgba(194,58,43,0.06);
+.custom-date-trigger:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-focus);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.native-date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .yi-ji-list {
