@@ -30,7 +30,6 @@ body {
     radial-gradient(ellipse at 20% 0%, rgba(194,58,43,0.015) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 100%, rgba(184,148,62,0.02) 0%, transparent 50%),
     linear-gradient(165deg, #f3ece2 0%, #ede4d8 40%, #e8ddd0 100%);
-  background-attachment: fixed;
 }
 
 /* ===== Top Nav — 液态玻璃 ===== */
@@ -43,16 +42,10 @@ body {
   gap: 0.4rem;
   padding: 0.7rem 1rem;
   /* 液态玻璃核心 */
-  backdrop-filter: blur(24px) saturate(2.2) brightness(1.06);
-  -webkit-backdrop-filter: blur(24px) saturate(2.2) brightness(1.06);
-  /* 虹彩渐变底色 — 从暖白到微金到微粉的微妙流转 */
-  background: linear-gradient(
-    165deg,
-    rgba(255,252,248,0.45) 0%,
-    rgba(250,244,235,0.42) 30%,
-    rgba(255,248,242,0.44) 60%,
-    rgba(248,240,230,0.43) 100%
-  );
+  backdrop-filter: blur(24px) saturate(1.5) brightness(1.04);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.04);
+  /* 底色与 body 顶部融合，移动端不割裂 */
+  background: rgba(243,236,226,0.48);
   /* 顶发光边 */
   border-bottom: 1px solid rgba(255,255,255,0.55);
   /* 底柔光边 */
