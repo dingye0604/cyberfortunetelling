@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>姻缘 · 周易命理</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">首页</a>
+  <a href="marriage.html" class="active">姻缘</a>
+  <a href="knowledge.html">命理知识</a>
+</nav>
+
+<div class="container">
+  <header>
+    <h1>姻缘推算</h1>
+    <p class="subtitle">八字合婚 · 生肖配对 · 五行互补</p>
+  </header>
+
+  <section class="form-section">
+    <form id="marriageForm">
+      <div class="persons-form">
+        <div class="person-form">
+          <h3>你</h3>
+          <div class="form-row">
+            <label for="year1">出生年</label>
+            <select id="year1" class="native-select"></select>
+          </div>
+          <div class="form-row">
+            <label for="month1">出生月</label>
+            <select id="month1" class="native-select">
+              <option value="1">一月</option><option value="2">二月</option><option value="3">三月</option>
+              <option value="4">四月</option><option value="5">五月</option><option value="6">六月</option>
+              <option value="7">七月</option><option value="8">八月</option><option value="9">九月</option>
+              <option value="10">十月</option><option value="11">十一月</option><option value="12">十二月</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="day1">出生日</label>
+            <select id="day1" class="native-select"></select>
+          </div>
+          <div class="form-row">
+            <label for="hour1">时辰</label>
+            <select id="hour1" class="native-select"></select>
+          </div>
+        </div>
+        <div class="person-form">
+          <h3>对方</h3>
+          <div class="form-row">
+            <label for="year2">出生年</label>
+            <select id="year2" class="native-select"></select>
+          </div>
+          <div class="form-row">
+            <label for="month2">出生月</label>
+            <select id="month2" class="native-select">
+              <option value="1">一月</option><option value="2">二月</option><option value="3">三月</option>
+              <option value="4">四月</option><option value="5">五月</option><option value="6">六月</option>
+              <option value="7">七月</option><option value="8">八月</option><option value="9">九月</option>
+              <option value="10">十月</option><option value="11">十一月</option><option value="12">十二月</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="day2">出生日</label>
+            <select id="day2" class="native-select"></select>
+          </div>
+          <div class="form-row">
+            <label for="hour2">时辰</label>
+            <select id="hour2" class="native-select"></select>
+          </div>
+        </div>
+      </div>
+      <button type="submit" id="submitBtn">推算姻缘</button>
+    </form>
+  </section>
+
+  <section id="results" class="results-section hidden">
+    <div class="result-block">
+      <h2>八字对照</h2>
+      <div class="pillars-dual" id="dualPillars"></div>
+    </div>
+
+    <div class="result-block">
+      <h2>综合评定</h2>
+      <div id="scoreBlock"></div>
+    </div>
+
+    <div class="result-block">
+      <h2>详细分析</h2>
+      <div id="detailsBlock"></div>
+    </div>
+
+    <p class="footer-note">姻缘推算仅供玩味参考。<br>真正的缘分从来不只取决于八字，而在于两个人的珍惜与经营。</p>
+  </section>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/bazi.js"></script>
+<script src="js/wuxing.js"></script>
+<script src="js/matching.js"></script>
+<script src="js/marriage-app.js"></script>
+</body>
+</html>

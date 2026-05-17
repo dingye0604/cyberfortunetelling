@@ -634,6 +634,115 @@ header::after {
   opacity: 0.6;
 }
 
+/* ===== Marriage ===== */
+.persons-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.person-form h3 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.08em;
+}
+
+.person-form h3::after {
+  content: '';
+  display: block;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--vermilion);
+  margin: 0.5rem auto 0;
+  opacity: 0.3;
+}
+
+.pillars-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.pillars-dual .pillar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.score-badge {
+  text-align: center;
+  padding: 1rem;
+}
+
+.score-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: rgba(194,58,43,0.06);
+  border: 2px solid var(--vermilion);
+  margin-bottom: 0.5rem;
+}
+
+.score-circle .grade {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--vermilion);
+  letter-spacing: 0.1em;
+}
+
+.score-summary {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  max-width: 32em;
+  margin: 0 auto;
+}
+
+.detail-item {
+  margin-bottom: 1.2rem;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.detail-header .detail-label {
+  font-size: 0.85rem;
+  color: var(--ink-light);
+  letter-spacing: 0.04em;
+}
+
+.detail-header .detail-score {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--vermilion);
+}
+
+.detail-text {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .persons-form { grid-template-columns: 1fr; gap: 0.5rem; }
+  .pillars-dual { grid-template-columns: 1fr; }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
   .top-nav { padding: 0.6rem 0.5rem; gap: 0.2rem; }
