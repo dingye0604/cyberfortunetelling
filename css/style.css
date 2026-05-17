@@ -202,8 +202,8 @@ header::after {
   pointer-events: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   background: rgba(255,255,252,0.97);
-  backdrop-filter: blur(24px) saturate(1.2);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
   border: 1px solid var(--glass-border);
   border-top: none;
   border-radius: 0 0 16px 16px;
@@ -681,8 +681,8 @@ header::after {
   pointer-events: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   background: rgba(255,255,252,0.97);
-  backdrop-filter: blur(24px) saturate(1.2);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
   border: 1px solid var(--glass-border);
   border-top: none;
   border-radius: 0 0 16px 16px;
