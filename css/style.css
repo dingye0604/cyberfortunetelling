@@ -101,6 +101,8 @@ header::after {
 
 /* ===== Form Card (Glass) ===== */
 .form-section {
+  position: relative;
+  z-index: 10;
   padding: 2rem 2rem 1.8rem;
   margin-bottom: 2.5rem;
   background: var(--glass-bg);
