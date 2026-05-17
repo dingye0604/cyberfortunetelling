@@ -727,12 +727,17 @@ header::after {
   .top-nav { padding: 0.6rem 0.5rem; gap: 0.2rem; }
   .top-nav a { padding: 0.35rem 0.9rem; font-size: 0.8rem; }
   .container { padding: 0.5rem 1rem 3rem; }
-  .form-section { padding: 1.5rem 1.2rem 1.3rem; border-radius: 20px; }
-  .result-block { padding: 1.3rem 1.2rem; border-radius: 16px; }
+  .form-section { padding: 1.5rem 1.2rem 1.3rem; border-radius: 32px; }
+  .result-block { padding: 1.3rem 1.2rem; border-radius: 26px; }
+  .custom-select-trigger { border-radius: 20px; }
+  .custom-select-options { max-height: 220px; border-radius: 0 0 20px 20px; }
+  .custom-select.open .custom-select-trigger { border-radius: 20px 20px 0 0; }
+  #submitBtn { border-radius: 20px; }
   .pillars { grid-template-columns: repeat(2, 1fr); }
   .pillar-gan, .pillar-zhi { font-size: 2.2rem; }
   .nayin-list { grid-template-columns: 1fr; }
   .gua-main-symbol { font-size: 2.8rem; }
+  .gua-reading { border-radius: 20px; }
+  .reading-nayin { border-radius: 20px; }
   header h1 { font-size: 1.6rem; }
-  .custom-select-options { max-height: 220px; }
 }
