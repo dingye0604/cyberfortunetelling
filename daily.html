@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今日宜忌 · 周易命理</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html">首页</a>
+  <a href="marriage.html">姻缘</a>
+  <a href="daily.html" class="active">宜忌</a>
+  <a href="knowledge.html">命理知识</a>
+</nav>
+
+<div class="container">
+  <header>
+    <h1>今日宜忌</h1>
+    <p class="subtitle" id="dateTitle"></p>
+  </header>
+
+  <section class="form-section" style="text-align:center;">
+    <div class="form-row">
+      <label for="pickDate">选择日期</label>
+      <input type="date" id="pickDate">
+    </div>
+  </section>
+
+  <section id="results" class="results-section">
+    <div class="result-block">
+      <h2>干支</h2>
+      <div id="ganzhi" style="text-align:center;font-size:1.6rem;font-weight:500;color:var(--ink);letter-spacing:0.08em;"></div>
+      <div style="text-align:center;font-size:0.85rem;color:var(--ink-light);margin-top:0.4rem;">
+        <span id="nayinBadge"></span>
+      </div>
+    </div>
+
+    <div class="result-block">
+      <h2>建除十二神</h2>
+      <div style="text-align:center;">
+        <span id="jianchuBadge" style="display:inline-block;padding:0.5rem 2rem;font-size:2rem;font-weight:500;color:var(--vermilion);letter-spacing:0.2em;"></span>
+      </div>
+    </div>
+
+    <div class="result-block" id="yiBlock">
+      <h2>宜</h2>
+      <div class="yi-ji-list" id="yiList"></div>
+    </div>
+
+    <div class="result-block" id="jiBlock">
+      <h2>忌</h2>
+      <div class="yi-ji-list" id="jiList"></div>
+    </div>
+
+    <div class="result-block">
+      <h2>纳音</h2>
+      <div class="day-info" id="nayinInfo"></div>
+    </div>
+
+    <p class="footer-note">命理不可尽信，命运终究掌握在自己的手中。</p>
+  </section>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/bazi.js"></script>
+<script src="js/wuxing.js"></script>
+<script src="js/daily.js"></script>
+<script src="js/daily-app.js"></script>
+</body>
+</html>

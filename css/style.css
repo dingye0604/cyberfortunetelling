@@ -613,6 +613,55 @@ header::after {
   opacity: 0.85;
 }
 
+/* ===== Daily ===== */
+#pickDate {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--ink);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#pickDate:focus {
+  outline: none;
+  border-color: rgba(194,58,43,0.25);
+  box-shadow: 0 0 0 3px rgba(194,58,43,0.06);
+}
+
+.yi-ji-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.yi-tag {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  font-size: 0.88rem;
+  color: #3d7a3d;
+  background: rgba(61,122,61,0.06);
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+
+.ji-tag {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  font-size: 0.88rem;
+  color: var(--ink-light);
+  background: rgba(138,130,120,0.06);
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+
 /* ===== Marriage ===== */
 .persons-form {
   display: grid;
