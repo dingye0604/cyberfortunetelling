@@ -12,6 +12,7 @@
 <body>
 
 <nav class="top-nav">
+  <a href="index.html" class="active">首页</a>
   <a href="bazi.html">排盘</a>
   <a href="marriage.html">姻缘</a>
   <a href="knowledge.html">命理知识</a>
@@ -25,10 +26,30 @@
 
   <section class="form-section">
     <div class="form-row">
-      <label for="pickDate">选择日期</label>
-      <div class="custom-date">
+      <label>选择日期</label>
+      <div class="custom-date" id="customDate">
         <div class="custom-date-trigger" id="dateTrigger"></div>
-        <input type="date" id="pickDate" class="native-date">
+        <div class="custom-date-panel" id="datePanel">
+          <div class="date-select-row">
+            <div class="date-select-col">
+              <label class="date-select-label">年</label>
+              <select id="dpYear" class="native-select"></select>
+            </div>
+            <div class="date-select-col">
+              <label class="date-select-label">月</label>
+              <select id="dpMonth" class="native-select">
+                <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+                <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+                <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+                <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+              </select>
+            </div>
+            <div class="date-select-col">
+              <label class="date-select-label">日</label>
+              <select id="dpDay" class="native-select"></select>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
