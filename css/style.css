@@ -27,9 +27,9 @@ body {
   min-height: 100vh;
   /* 极浅暖色背景 —— 毛玻璃需要背景层次 */
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(194,58,43,0.015) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(184,148,62,0.02) 0%, transparent 50%),
-    linear-gradient(165deg, #f3ece2 0%, #ede4d8 40%, #e8ddd0 100%);
+    radial-gradient(ellipse at 20% 0%, rgba(194,58,43,0.01) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(184,148,62,0.015) 0%, transparent 50%),
+    #f3ece2;
 }
 
 /* ===== Top Nav — 液态玻璃 ===== */
