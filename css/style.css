@@ -628,10 +628,10 @@ header::after {
 /* ===== Footer note ===== */
 .footer-note {
   text-align: center;
-  font-size: 0.78rem;
-  color: var(--ink-light);
+  font-size: 0.92rem;
+  color: var(--ink-soft);
   margin-top: 2rem;
-  opacity: 0.6;
+  opacity: 0.85;
 }
 
 /* ===== Marriage ===== */
